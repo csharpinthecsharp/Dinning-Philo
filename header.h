@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 14:59:35 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/08/31 21:14:00 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/01 01:05:46 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@
 #include <string.h>
 #include <unistd.h>
 #include <pthread.h>
+#include <sys/time.h>
 
 typedef struct s_philo
 {
-    int             id;
+    int                   id;
+    long long             last_meal;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     pthread_t thread;   
+    struct s_data   *data;
 }   t_philo;
 
 typedef struct s_data
@@ -33,6 +36,7 @@ typedef struct s_data
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
+    long long timestamp_in_ms;
     t_philo *philo;
     pthread_mutex_t *forks;
 } t_data;
@@ -41,6 +45,6 @@ typedef struct s_data
 int init_data(t_data *d, char *joker[]);
 void free_mutex(t_data *d);
 void *routine(void *arg);
-
+long long get_time(void);
 
 #endif

@@ -1,6 +1,6 @@
 NAME	= philosophers
 CC		= clang
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -pthread -Wall -Wextra -Werror
 
 SRCS	= main.c \
 		free.c \
