@@ -5,43 +5,34 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/31 17:35:19 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/01 13:58:01 by ltrillar         ###   ########.fr       */
+/*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
+/*   Updated: 2025/09/01 22:49:42 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int init_data(t_data *d, char *joker[])
+static int init_philo_data(t_philo *p)
 {
-    d->number_of_philosophers = atoi(joker[1]);
-    d->time_to_die = atoi(joker[2]) * 1000;
-    d->time_to_eat = atoi(joker[3]) * 1000;
-    d->time_to_sleep = atoi(joker[4]) * 1000;
-
-    d->timestamp_in_ms = current_time(d);
+    (void)p;
     
-    int i = 0;
-
-    d->philo = malloc(sizeof(t_philo) * d->number_of_philosophers);
-    d->forks = malloc(sizeof(pthread_mutex_t) * d->number_of_philosophers);
-    if (!d->philo || !d->forks)
+    p->data = malloc(sizeof(p->data));
+    if (!p->data)
         return (1);
 
-    while (i < d->number_of_philosophers)
-    {
-        pthread_mutex_init(&d->forks[i], NULL);
-        d->philo[i].id = i + 1;
-        d->philo[i].left_fork = &d->forks[i];
-        d->philo[i].right_fork = &d->forks[(i + 1) % d->number_of_philosophers];
-        d->philo[i].data = d;
-        d->philo[i].last_meal = 0;
-        pthread_create(&d->philo[i].thread, NULL, &routine, &d->philo[i]);
-        i++;
-    }
-    
-    pthread_create(&d->philo->monitor, NULL, &monitor, &d->philo);
+    p->data->n_philo = 0;
+    p->data->t_die = 0;
+    p->data->t_eat = 0;
+    p->data->t_sleep = 0;
+    p->data->n_eat_max = 0;
+
     return (0);
 }
 
-
+int init_struct(t_philo *p, char *joker[])
+{
+    (void)joker;
+    if (init_philo_data(p) == 1)
+        return (1);
+    return (0);
+}

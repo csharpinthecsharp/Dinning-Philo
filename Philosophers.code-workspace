@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"name": "Philosophers",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"header.h": "c",
+			"time.h": "c"
+		}
+	}
+}
