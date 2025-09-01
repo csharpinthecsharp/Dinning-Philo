@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 17:51:15 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/01 14:00:12 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/01 14:11:10 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void *routine(void *arg)
     t_philo *philo = (t_philo *)arg;
     
     while (1) // loop until a stop condition
-    {    
+    {  
         
         if (philo->data->number_of_philosophers == 1) {
             printf("%lld %d has taken a fork\n", current_time(philo->data), philo->id);
@@ -41,7 +41,7 @@ void *routine(void *arg)
         // Eat
         printf("%lld %d is eating\n", current_time(philo->data), philo->id);
         philo->last_meal = current_time(philo->data);
-        usleep(philo->data->time_to_eat * 1000);
+        usleep(philo->data->time_to_eat);
         
         // Put down forks
         pthread_mutex_unlock(philo->right_fork);
@@ -49,7 +49,7 @@ void *routine(void *arg)
         
         // Sleep
         printf("%lld %d is sleeping\n", current_time(philo->data), philo->id);
-        usleep(philo->data->time_to_sleep * 1000);
+        usleep(philo->data->time_to_sleep);
         
         // Think
         printf("%lld %d is thinking\n", current_time(philo->data), philo->id);
