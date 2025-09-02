@@ -8,7 +8,6 @@
 #include <sys/time.h>
 #include <string.h>
 
-/* Colors */
 #define RESET "\033[0m"
 #define RED   "\033[31m"
 #define GRN   "\033[32m"
@@ -20,11 +19,11 @@
 
 typedef struct s_data
 {
-    int n_philo;        // nombre de philosophes
-    int t_die;      // temps avant la mort (ms)
-    int t_sleep;    // temps de sommeil (ms)
+    int n_philo;
+    int t_die;
+    int t_sleep;
     int t_eat;
-    int n_eat_max;  // nombre de repas requis
+    int n_eat_max;
     long long time_at_start;
 }   t_data;
 

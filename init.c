@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 16:15:39 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/03 00:36:05 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,19 @@ static int init_threads(t_philo *p)
     return (0);
 }
 
-
+static int pre_thread(t_philo *p)
+{
+    if (p->data->n_philo == 1)
+    {
+        long long t_current = time_ms();
+        long long t_elapsed = t_current - p->data->time_at_start;
+        printf("%s 🍃 [%lld]-> %d: %s \n", CYN, t_elapsed, p->id, "has taken a fork 🍴");
+        usleep(p->data->t_die);
+        printf("%s 🍃 [%lld]-> %d: %s \n", RED, t_elapsed, p->id, "died 💀");
+        return (1);
+    }
+    return (0);
+}
 int init_struct(t_philo **p, char *joker[], int ac)
 {
     (void)joker;
@@ -81,6 +93,8 @@ int init_struct(t_philo **p, char *joker[], int ac)
     if (init_philo(p, n) == 1)
         return (1);
     if (start_check(*p, joker, ac) == 1)
+        return (1);
+    if (pre_thread(*p) == 1)
         return (1);
     if (init_threads(*p) == 1)
         return (1);

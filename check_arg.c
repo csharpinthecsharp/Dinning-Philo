@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:14:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 16:15:32 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/03 00:25:00 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int check_max_min(char *joker[], int pos)
 	}
     if ((nbr * sign) > MAX_INT)
         return (-1);
-	return (nbr * sign);
+    return (nbr * sign);
 }
 
 static int attribute_int(int nb, int pos, t_philo *p)
@@ -65,11 +65,11 @@ static int attribute_int(int nb, int pos, t_philo *p)
     if (pos == 1)
         p->data->n_philo = nb;
     else if (pos == 2)
-        p->data->t_die = nb;
+        p->data->t_die = nb * 1000;
     else if (pos == 3)
-        p->data->t_eat = nb;
+        p->data->t_eat = nb * 1000;
     else if (pos == 4)
-        p->data->t_sleep = nb;
+        p->data->t_sleep = nb * 1000;
     else if (pos == 5)
         p->data->n_eat_max = nb;
     return (nb);
