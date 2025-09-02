@@ -40,7 +40,7 @@ Run a simulation with 5 philosophers:
 - 200ms to sleep
 ```bash
 ./philosophers 5 800 200 200
-```🖼️ Visualization
+```
 
 ## 🖼️ Visualization
 
