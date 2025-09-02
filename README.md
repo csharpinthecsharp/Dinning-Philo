@@ -30,9 +30,35 @@ make
 ```bash
 ./philosophers [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [optional:number_of_times_each_philosopher_must_eat]
 ```
+---
 
 ## 🖥️ Example
+
 Run a simulation with 5 philosophers:
--800ms before dying if they don’t eat
--200ms to eat
--200ms to sleep
+- 800ms before dying if they don’t eat
+- 200ms to eat
+- 200ms to sleep
+```bash
+./philosophers 5 800 200 200
+```
+
+## 🖼️ Visualization
+
+```bash
+Philo 1   🍴     Philo 2
+     \           /
+      \         /
+       🍴     🍴
+      /         \
+     /           \
+Philo 5   🍴     Philo 3
+          |
+       Philo 4
+```
+
+---
+
+## 🧩 Notes
+- Each philosopher is represented by a thread.
+- Forks are protected with mutexes to avoid simultaneous access.
+- A global mutex is used for clean console output.
