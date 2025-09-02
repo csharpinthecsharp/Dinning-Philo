@@ -30,3 +30,9 @@ make
 ```bash
 ./philosophers [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [optional:number_of_times_each_philosopher_must_eat]
 ```
+
+## 🖥️ Example
+Run a simulation with 5 philosophers:
+-800ms before dying if they don’t eat
+-200ms to eat
+-200ms to sleep
