@@ -6,6 +6,7 @@ SRCS	= main.c \
 		init.c \
 		check_arg.c \
 		utils.c \
+		routine.c \
 
 OBJS	= $(SRCS:.c=.o)
 all: $(NAME)

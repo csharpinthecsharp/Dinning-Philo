@@ -29,13 +29,19 @@ typedef struct s_data
 
 typedef struct s_philo
 {
+    pthread_t *thread;
+    int id;
     struct s_data      *data;
 }   t_philo;
 
 /* init */
-int init_struct(t_philo *p, char *joker[]);
+int init_struct(t_philo **p, char *joker[], int ac);
 int start_check(t_philo *p, char *joker[], int ac);
 
+/* routine */
+void *routine(void *arg);
+
 /* utils */
+int ft_strlen(char *str);
 
 #endif

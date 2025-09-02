@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:14:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/01 22:48:29 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/02 02:01:05 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static int attribute_int(int nb, int pos, t_philo *p)
         p->data->t_sleep = nb;
     else if (pos == 5)
         p->data->n_eat_max = nb;
-    
     return (nb);
 }
 
@@ -91,7 +90,6 @@ int start_check(t_philo *p, char *joker[], int ac)
         if (value == -1)
             return (1);
         attribute_int(check_max_min(joker, i), i, p);
-        printf("%d\n",value);
         i++;
     }
     return (0);

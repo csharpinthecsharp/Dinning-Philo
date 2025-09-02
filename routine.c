@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/01 20:20:00 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 01:59:53 by ltrillar         ###   ########.fr       */
+/*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
+/*   Updated: 2025/09/02 01:21:07 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
-int main(int ac, char *av[])
+
+void *routine(void *arg)
 {
-    if (!(ac >= 5 && ac <= 6))
-        return (1);
-
-    t_philo philo;
-    t_philo *p = &philo;
-    if (init_struct(&p, av, ac) == 1)
-        return (1);
-    return (0);
+    t_philo *p = (t_philo *)arg;
+    printf("Bonjour, je suis le philosophe #%d\n", p->id);
+    return (NULL);
 }
-

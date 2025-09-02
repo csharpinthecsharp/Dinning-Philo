@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "header.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "initializer_list": "c"
     }
 }
