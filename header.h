@@ -25,6 +25,7 @@ typedef struct s_data
     int t_sleep;    // temps de sommeil (ms)
     int t_eat;
     int n_eat_max;  // nombre de repas requis
+    long long time_at_start;
 }   t_data;
 
 typedef struct s_philo
@@ -32,6 +33,8 @@ typedef struct s_philo
     pthread_t *thread;
     int id;
     struct s_data      *data;
+    int death;
+    pthread_mutex_t print_mutex;
 }   t_philo;
 
 /* init */
@@ -40,8 +43,11 @@ int start_check(t_philo *p, char *joker[], int ac);
 
 /* routine */
 void *routine(void *arg);
+void *monitoring(void *arg);
 
 /* utils */
 int ft_strlen(char *str);
+long long time_ms(void);
+void print_lock(t_philo *p, char *str);
 
 #endif

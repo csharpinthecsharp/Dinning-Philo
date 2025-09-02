@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 02:05:59 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:15:39 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,36 @@
 
 static int init_philo(t_philo **p, int n)
 {
-    *p = malloc(sizeof(t_philo) * n);
+    *p = malloc(sizeof(t_philo) * n); // A FIX LE VRAI NOMBRE
     if (!*p)
         return (1);
 
-    (*p)->data = malloc(sizeof(t_data));
-    if (!(*p)->data)
+    t_data *data = malloc(sizeof(t_data));
+    if (!data)
         return (1);
 
-    (*p)->data->n_philo = 0;
-    (*p)->data->t_die = 0;
-    (*p)->data->t_eat = 0;
-    (*p)->data->t_sleep = 0;
-    (*p)->data->n_eat_max = 0;
-
+    data->n_philo = 0;
+    data->t_die = 0;
+    data->t_eat = 0;
+    data->t_sleep = 0;
+    data->n_eat_max = 0;
+    data->time_at_start = time_ms();
+    
     int i = 0;
     while (i < n)
     {
+        (*p)[i].death = 1;
         (*p)[i].id = i + 1;
         (*p)[i].thread = NULL;
+        (*p)[i].data = data;
         i++;
     }
     return (0);
+}
+
+static void init_mutex(t_philo *p)
+{
+    pthread_mutex_init(&p->print_mutex, NULL);
 }
 
 static int init_threads(t_philo *p)
@@ -43,17 +51,18 @@ static int init_threads(t_philo *p)
     int i;
 
     i = 0;
+    init_mutex(p);
     p->thread = malloc(sizeof(pthread_t) * p->data->n_philo);
     if (!p->thread)
         return (1);
-    while (i <= p->data->n_philo)
+    while (i < p->data->n_philo)
     {
         if (pthread_create(&p->thread[i], NULL, &routine, &p[i]) != 0)
             return (1);
         i++;
     }
     i = 0;
-    while (i <= p->data->n_philo)
+    while (i < p->data->n_philo)
     {
         if (pthread_join(p->thread[i], NULL))
             return (1);
@@ -67,7 +76,7 @@ int init_struct(t_philo **p, char *joker[], int ac)
 {
     (void)joker;
     int n;
-
+    
     n = ac;
     if (init_philo(p, n) == 1)
         return (1);

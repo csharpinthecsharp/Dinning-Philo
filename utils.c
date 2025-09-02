@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 22:27:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 00:22:35 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:15:48 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,20 @@ int ft_strlen(char *str)
     while (str[i])
         i++;
     return (i);
+}
+long long time_ms(void) {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
+}
+
+void print_lock(t_philo *p, char *str)
+{
+    pthread_mutex_lock(&p->print_mutex);
+    long long t_current = time_ms();
+    long long t_elapsed = t_current - p->data->time_at_start;
+    printf(" 🍃 [%lld]-> %d %s: \n", t_elapsed, p->id, str);
+    usleep(100);
+    pthread_mutex_unlock(&p->print_mutex);
 }

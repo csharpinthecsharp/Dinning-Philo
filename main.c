@@ -6,11 +6,12 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:20:00 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 01:59:53 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:15:00 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
+
 int main(int ac, char *av[])
 {
     if (!(ac >= 5 && ac <= 6))

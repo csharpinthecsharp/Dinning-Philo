@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 01:21:07 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:15:41 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 void *routine(void *arg)
 {
+    t_philo *p = (t_philo *)arg;   
+    while (p->death == 1)
+    {
+        print_lock(p, "coucou");
+    }
+    return (NULL);
+}
+
+void *monitoring(void *arg)
+{  
     t_philo *p = (t_philo *)arg;
-    printf("Bonjour, je suis le philosophe #%d\n", p->id);
+    (void)p; 
     return (NULL);
 }

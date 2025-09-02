@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:14:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 02:01:05 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/02 16:15:32 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ static int check_max_min(char *joker[], int pos)
 		i++;
 	}
     if ((nbr * sign) > MAX_INT)
-    {
         return (-1);
-    }
 	return (nbr * sign);
 }
 
