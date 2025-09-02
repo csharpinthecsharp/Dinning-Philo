@@ -40,7 +40,7 @@ Run a simulation with 5 philosophers:
 - 200ms to sleep
 ```bash
 ./philosophers 5 800 200 200
-```
+```🖼️ Visualization
 
 ## 🖼️ Visualization
 
@@ -51,10 +51,10 @@ Run a simulation with 5 philosophers:
                               |
                               |
         🍴4 ------------------●------------------ 🍴1
-        |                 (Table)                |
+        |                 (Table)                 |
         |                                         |
  (Philosopher 4)                             (Philosopher 1)
-   THINKING                                     WAITING
+   THINKING                                     SLEEPING
         |                                         |
         |                                         |
         🍴3 ------------------●------------------ 🍴2
