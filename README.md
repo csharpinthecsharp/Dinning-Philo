@@ -45,15 +45,28 @@ Run a simulation with 5 philosophers:
 ## 🖼️ Visualization
 
 ```bash
-Philo 1   🍴     Philo 2
-     \           /
-      \         /
-       🍴     🍴
-      /         \
-     /           \
-Philo 5   🍴     Philo 3
-          |
-       Philo 4
+                         (Philosopher 0)
+                          THINKING
+                             🍴0
+                              |
+                              |
+        🍴4 ------------------●------------------ 🍴1
+        |                 (Table)                |
+        |                                         |
+ (Philosopher 4)                             (Philosopher 1)
+   THINKING                                     WAITING
+        |                                         |
+        |                                         |
+        🍴3 ------------------●------------------ 🍴2
+                              |
+                              |
+                         (Philosopher 3)
+                           EATING
+                              |
+                              |
+                         (Philosopher 2)
+                          THINKING
+
 ```
 
 ---
