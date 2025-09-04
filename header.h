@@ -24,8 +24,12 @@ typedef struct s_data
     int t_sleep;
     int t_eat;
     int n_eat_max;
-    long long time_at_start;
+    long long time_at_start;   
+    pthread_mutex_t print_mutex;
+    pthread_mutex_t *forks;
 }   t_data;
+
+
 
 typedef struct s_philo
 {
@@ -33,7 +37,8 @@ typedef struct s_philo
     int id;
     struct s_data      *data;
     int death;
-    pthread_mutex_t print_mutex;
+    long long lastmeal;
+
 }   t_philo;
 
 /* init */

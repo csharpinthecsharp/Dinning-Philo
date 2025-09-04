@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 22:27:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/02 16:15:48 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/04 03:55:06 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ long long time_ms(void) {
 
 void print_lock(t_philo *p, char *str)
 {
-    pthread_mutex_lock(&p->print_mutex);
+    pthread_mutex_lock(&p->data->print_mutex);
     long long t_current = time_ms();
-    long long t_elapsed = t_current - p->data->time_at_start;
-    printf(" 🍃 [%lld]-> %d %s: \n", t_elapsed, p->id, str);
-    usleep(100);
-    pthread_mutex_unlock(&p->print_mutex);
+    long long t_elapsed = (t_current - p->data->time_at_start);
+    printf(" 🍃 [%lld]-> %d: %s \n", t_elapsed, p->id, str);
+    usleep(1000);
+    pthread_mutex_unlock(&p->data->print_mutex);
 }

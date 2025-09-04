@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/03 00:36:05 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/04 03:54:21 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int init_philo(t_philo **p, int n)
     t_data *data = malloc(sizeof(t_data));
     if (!data)
         return (1);
-
     data->n_philo = 0;
     data->t_die = 0;
     data->t_eat = 0;
@@ -35,6 +34,7 @@ static int init_philo(t_philo **p, int n)
         (*p)[i].death = 1;
         (*p)[i].id = i + 1;
         (*p)[i].thread = NULL;
+        (*p)[i].lastmeal = 0;
         (*p)[i].data = data;
         i++;
     }
@@ -43,7 +43,14 @@ static int init_philo(t_philo **p, int n)
 
 static void init_mutex(t_philo *p)
 {
-    pthread_mutex_init(&p->print_mutex, NULL);
+    pthread_mutex_init(&p->data->print_mutex, NULL);
+    int i = 0;
+    p->data->forks = malloc(sizeof(pthread_mutex_t) * p->data->n_philo);
+    while (i < p->data->n_philo)
+    {
+        pthread_mutex_init(&p->data->forks[i], NULL);
+        i++;
+    }
 }
 
 static int init_threads(t_philo *p)
@@ -73,14 +80,14 @@ static int init_threads(t_philo *p)
 
 static int pre_thread(t_philo *p)
 {
+    long long t_current = time_ms();
+    long long t_elapsed = t_current - p->data->time_at_start;
     if (p->data->n_philo == 1)
     {
-        long long t_current = time_ms();
-        long long t_elapsed = t_current - p->data->time_at_start;
         printf("%s 🍃 [%lld]-> %d: %s \n", CYN, t_elapsed, p->id, "has taken a fork 🍴");
         usleep(p->data->t_die);
         printf("%s 🍃 [%lld]-> %d: %s \n", RED, t_elapsed, p->id, "died 💀");
-        return (1);
+        return (0);
     }
     return (0);
 }
