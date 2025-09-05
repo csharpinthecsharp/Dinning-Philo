@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:20:00 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/05 21:19:40 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/05 21:30:02 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int main(int ac, char *av[])
     t_philo *p = &philo;
     if (init_struct(&p, av, ac) == 1)
         return (1);
+    free(p);
+    free(p->data);
     return (0);
 }
 

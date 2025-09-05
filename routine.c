@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/05 21:19:36 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/05 21:31:14 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void *routine(void *arg)
 
     while (1)
     {
+        if (p->data->death == 0) 
+            return (NULL);
         pthread_mutex_lock(&p->data->death_mutex);
         if (p->data->death == 0) 
             return (NULL);
@@ -65,7 +67,6 @@ void *monitoring(void *arg)
             {
                 print_lock(&p[i], "died");
                 p->data->death = 0;
-                exit(EXIT_FAILURE);
             } 
             i++;
             usleep(1000);
