@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:14:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/04 03:45:52 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/05 21:19:32 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int start_check(t_philo *p, char *joker[], int ac)
         value = (check_max_min(joker, i));
         if (value == -1)
             return (1);
-        attribute_int(check_max_min(joker, i), i, p);
+        attribute_int(value, i, p);
         i++;
     }
     return (0);
