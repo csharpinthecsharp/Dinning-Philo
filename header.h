@@ -54,6 +54,6 @@ void *monitoring(void *arg);
 /* utils */
 int ft_strlen(char *str);
 long long time_ms(void);
-void print_lock(t_philo *p, char *str);
+void print_lock(t_philo *p, char *str, char *emoji);
 
 #endif
