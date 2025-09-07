@@ -6,69 +6,74 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 22:27:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/06 19:22:09 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:24:58 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int ft_strlen(char *str)
+int	ft_strlen(char *str)
 {
-    int i;
-    
-    i = 0;
-    while (str[i])
-        i++;
-    return (i);
+	int	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-long long time_ms(void) {
-    struct timeval tv;
-
-    gettimeofday(&tv,NULL);
-    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
-}
-
-int print_lock(t_philo *p, char *str, char *emoji, int state)
+long long	time_ms(void)
 {
-    pthread_mutex_lock(&p->data->death_mutex);
-    if (p->data->death == 0 && state == 0)
-    {
-        pthread_mutex_unlock(&p->data->death_mutex);
-        return (1);
-    }
-    pthread_mutex_unlock(&p->data->death_mutex);
-    pthread_mutex_lock(&p->data->print_mutex);
-    long long t_current = time_ms();
-    long long t_elapsed = (t_current - p->data->time_at_start);
-    printf(" %s [%lld]-> %d: %s \n", emoji, t_elapsed, p->id, str);
-    pthread_mutex_unlock(&p->data->print_mutex);
-    usleep(100);
-    return (0);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return ((((long long)tv.tv_sec) * 1000) + (tv.tv_usec / 1000));
 }
 
-void free_and_exit(t_philo *p)
-{   
-    int i = 0;
-    while (i < p->data->n_philo)
-    {
-        pthread_mutex_destroy(&p->data->forks[i]);
-        pthread_mutex_destroy(&p[i].meal_mutex);
-        i++;
-    }
-    pthread_mutex_destroy(&p->data->print_mutex);
-    pthread_mutex_destroy(&p->data->death_mutex);
-    free(p->data->forks);
-    free(p->thread);
-    free(p->data);
-    free(p);
-}
-
-void    ft_usleep(size_t mls)
+int	print_lock(t_philo *p, char *str, char *emoji, int state)
 {
-    size_t  start;
+	long long	t_current;
+	long long	t_elapsed;
 
-    start = time_ms();
-    while (time_ms() - start < mls)
-        usleep(500);
+	pthread_mutex_lock(&p->data->death_mutex);
+	if (p->data->death == 0 && state == 0)
+	{
+		pthread_mutex_unlock(&p->data->death_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&p->data->death_mutex);
+	pthread_mutex_lock(&p->data->print_mutex);
+	t_current = time_ms();
+	t_elapsed = (t_current - p->data->time_at_start);
+	printf(" %s [%lld]-> %d: %s \n", emoji, t_elapsed, p->id, str);
+	pthread_mutex_unlock(&p->data->print_mutex);
+	usleep(100);
+	return (0);
+}
+
+void	free_and_exit(t_philo *p)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->data->n_philo)
+	{
+		pthread_mutex_destroy(&p->data->forks[i]);
+		i++;
+	}
+	pthread_mutex_destroy(&p->data->print_mutex);
+	pthread_mutex_destroy(&p->data->death_mutex);
+	free(p->data->forks);
+	free(p->thread);
+	free(p->data);
+	free(p);
+}
+
+void	ft_usleep(size_t mls)
+{
+	size_t	start;
+
+	start = time_ms();
+	while (time_ms() - start < mls)
+		usleep(500);
 }

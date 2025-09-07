@@ -6,98 +6,111 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 11:10:53 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:22:11 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-void *routine(void *arg)
+static int	take_forks(t_philo *p, int left, int right, int start)
 {
-    t_philo *p = (t_philo *)arg;   
-    int left = p->id - 1;
-    int right = (p->id) % p->data->n_philo;
-    p->lastmeal = p->data->time_at_start;
+	int	temp;
 
-    while (1)
-    {
-        if (print_lock(p, BLUE "is thinking" RESET, "💭", 0) == 1)
-                return (NULL);
-        if (left < right)
-        {
-            pthread_mutex_lock(&p->data->forks[left]);
-            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-            {
-                pthread_mutex_unlock(&p->data->forks[left]);
-                return (NULL);
-            }
-            pthread_mutex_lock(&p->data->forks[right]);
-
-            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-            {
-                pthread_mutex_unlock(&p->data->forks[right]);
-                pthread_mutex_unlock(&p->data->forks[left]);
-                return (NULL);
-            }
-        }
-        else
-        {
-            pthread_mutex_lock(&p->data->forks[right]);
-            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-            {
-                pthread_mutex_unlock(&p->data->forks[right]);
-                return (NULL);
-            }
-            pthread_mutex_lock(&p->data->forks[left]);
-            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-            {
-                pthread_mutex_unlock(&p->data->forks[left]);
-                pthread_mutex_unlock(&p->data->forks[right]);
-                return (NULL);
-            }
-        }
-        if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
-            return (NULL);
-        pthread_mutex_lock(&p->meal_mutex);
-        p->lastmeal = time_ms();
-        pthread_mutex_unlock(&p->meal_mutex);
-        ft_usleep(p->data->t_eat);
-
-        pthread_mutex_unlock(&p->data->forks[right]);
-        pthread_mutex_unlock(&p->data->forks[left]);
-
-        if (print_lock(p, GREEN "is sleeping" RESET, "💤", 0) == 1)
-            return (NULL);
-        ft_usleep(p->data->t_sleep);
-    }
-    return (NULL);
+	if (start == 1)
+	{
+		temp = left;
+		left = right;
+		right = temp;
+	}
+	pthread_mutex_lock(&p->data->forks[left]);
+	if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
+	{
+		pthread_mutex_unlock(&p->data->forks[left]);
+		return (1);
+	}
+	pthread_mutex_lock(&p->data->forks[right]);
+	if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
+	{
+		pthread_mutex_unlock(&p->data->forks[right]);
+		pthread_mutex_unlock(&p->data->forks[left]);
+		return (1);
+	}
+	return (0);
 }
 
+void	eat_sleep(t_philo *p)
+{
+	pthread_mutex_lock(&p->meal_mutex);
+	p->lastmeal = time_ms();
+	pthread_mutex_unlock(&p->meal_mutex);
+	ft_usleep(p->data->t_eat);
+	pthread_mutex_unlock(&p->data->forks[p->fork_left]);
+	pthread_mutex_unlock(&p->data->forks[p->fork_right]);
+}
 
-void *monitoring(void *arg)
-{  
-    t_philo *p = (t_philo *)arg;
-    int i = 0;
-    while (1)
-    {
-        i = 0;
-        while (i < p->data->n_philo)
-        {
-            pthread_mutex_lock(&p[i].meal_mutex);
-            long long meal = p[i].lastmeal;
-            pthread_mutex_unlock(&p[i].meal_mutex);
-            long long t_current = time_ms();
-            if (t_current - meal >= p[i].data->t_die)
-            {
-                pthread_mutex_lock(&p->data->death_mutex);
-                p->data->death = 0;
-                pthread_mutex_unlock(&p->data->death_mutex);
-                print_lock(&p[i], "\e[31mdied" RESET, "⚰️ ", 1);
-                return (NULL);
-            } 
-            ft_usleep(1);
-            i++;
-        }
-    }
-    return (NULL);
+void	*routine(void *arg)
+{
+	t_philo	*p;
+
+	p = (t_philo *)arg;
+	while (1)
+	{
+		if (print_lock(p, BLUE "is thinking" RESET, "💭", 0) == 1)
+			break ;
+		if (p->fork_left < p->fork_right)
+		{
+			if (take_forks(p, p->fork_left, p->fork_right, 0) == 1)
+				break ;
+		}
+		else
+		{
+			if (take_forks(p, p->fork_left, p->fork_right, 1) == 1)
+				break ;
+		}
+		if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
+			break ;
+		eat_sleep(p);
+		if (print_lock(p, GREEN "is sleeping" RESET, "💤", 0) == 1)
+			break ;
+		ft_usleep(p->data->t_sleep);
+	}
+	return (NULL);
+}
+
+static long long	get_lastmeal(t_philo *p)
+{
+	long long	meal_time;
+
+	pthread_mutex_lock(&p->meal_mutex);
+	meal_time = p->lastmeal;
+	pthread_mutex_unlock(&p->meal_mutex);
+	return (meal_time);
+}
+
+void	*monitoring(void *arg)
+{
+	t_philo		*p;
+	int			i;
+	long long	meal;
+
+	p = (t_philo *)arg;
+	while (1)
+	{
+		i = 0;
+		while (i < p->data->n_philo)
+		{
+			meal = get_lastmeal(p);
+			if (time_ms() - meal >= p[i].data->t_die)
+			{
+				pthread_mutex_lock(&p->data->death_mutex);
+				p->data->death = 0;
+				pthread_mutex_unlock(&p->data->death_mutex);
+				print_lock(&p[i], "\e[31mdied" RESET, "⚰️ ", 1);
+				return (NULL);
+			}
+			ft_usleep(1);
+			i++;
+		}
+	}
+	return (NULL);
 }

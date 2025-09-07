@@ -1,6 +1,0 @@
-4 310 200 100 
-
-4 philo
-310 seconde avant la mort si pas mangé
-200 seconde pour manger 
-100 seconde pour dormir
