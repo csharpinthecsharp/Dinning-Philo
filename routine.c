@@ -28,33 +28,33 @@ void *routine(void *arg)
         {
             pthread_mutex_lock(&p->data->forks[left]);
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-                return (NULL);
+                break;
             pthread_mutex_lock(&p->data->forks[right]);
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-                return (NULL);
+                break;
         }
         else
         {
             pthread_mutex_lock(&p->data->forks[right]);
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-                return (NULL);
+                break;
             pthread_mutex_lock(&p->data->forks[left]);
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
-                return (NULL);
+                break;
         }
         p->lastmeal = time_ms();
         if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
-                return (NULL);
+            break;
         ft_usleep(p->data->t_eat);
 
         pthread_mutex_unlock(&p->data->forks[right]);
         pthread_mutex_unlock(&p->data->forks[left]);
 
         if (print_lock(p, GREEN "is sleeping" RESET, "💤", 0) == 1)
-                return (NULL);
+            break;
         ft_usleep(p->data->t_sleep);
     }
-    return NULL;
+    return (NULL);
 }
 
 
