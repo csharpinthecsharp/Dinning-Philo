@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 18:20:04 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:48:38 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	init_philo(t_philo **p, int n)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (1);
-	data->n_eat_max = 0;
 	data->time_at_start = time_ms();
 	data->death = 1;
 	data->eye = 0;
@@ -36,6 +35,7 @@ static int	init_philo(t_philo **p, int n)
 		(*p)[i].data = data;
 		(*p)[i].fork_left = (*p)[i].id - 1;
 		(*p)[i].fork_right = (*p)[i].id % n;
+		(*p)[i].eat_count = 0;
 		i++;
 	}
 	return (0);

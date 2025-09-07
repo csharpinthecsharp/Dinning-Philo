@@ -6,13 +6,12 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:14:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 18:24:48 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:48:14 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-// CHECK FOR NUMBERS
 static int	check_nb(char *joker[])
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 18:21:55 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 18:24:13 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:33:33 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_philo
 	pthread_mutex_t	meal_mutex;
 	int				fork_left;
 	int				fork_right;
+	long long		eat_count;
 }					t_philo;
 
 /* init */

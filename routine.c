@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 18:22:11 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/07 18:50:06 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	eat_sleep(t_philo *p)
 	ft_usleep(p->data->t_eat);
 	pthread_mutex_unlock(&p->data->forks[p->fork_left]);
 	pthread_mutex_unlock(&p->data->forks[p->fork_right]);
+	p->eat_count++;
 }
 
 void	*routine(void *arg)
@@ -100,12 +101,13 @@ void	*monitoring(void *arg)
 		while (i < p->data->n_philo)
 		{
 			meal = get_lastmeal(p);
-			if (time_ms() - meal >= p[i].data->t_die)
+			if ((p[i].eat_count == p->data->n_eat_max && p->data->n_eat_max > 0)
+				|| time_ms() - meal >= p[i].data->t_die)
 			{
 				pthread_mutex_lock(&p->data->death_mutex);
 				p->data->death = 0;
 				pthread_mutex_unlock(&p->data->death_mutex);
-				print_lock(&p[i], "\e[31mdied" RESET, "⚰️ ", 1);
+				print_lock(p, "\e[31mdied" RESET, "⚰️ ", 1);
 				return (NULL);
 			}
 			ft_usleep(1);
