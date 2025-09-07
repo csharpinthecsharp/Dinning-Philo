@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/05 21:19:30 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:29:31 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void init_mutex(t_philo *p)
     pthread_mutex_init(&p->data->print_mutex, NULL);
     int i = 0;
     p->data->forks = malloc(sizeof(pthread_mutex_t) * p->data->n_philo);
-    pthread_mutex_init(&p->data->death_mutex, NULL);
     while (i < p->data->n_philo)
     {
         pthread_mutex_init(&p->data->forks[i], NULL);
@@ -64,7 +63,7 @@ static int init_threads(t_philo *p)
     p->thread = malloc(sizeof(pthread_t) * p->data->n_philo);
     if (!p->thread)
         return (1);
-    if (pthread_create(&p->data->eye, NULL, &monitoring, &p) != 0)
+    if (pthread_create(&p->data->eye, NULL, &monitoring, p) != 0)
         return (1);  
     while (i < p->data->n_philo)
     {
