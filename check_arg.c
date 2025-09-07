@@ -65,11 +65,11 @@ static int attribute_int(int nb, int pos, t_philo *p)
     if (pos == 1)
         p->data->n_philo = nb;
     else if (pos == 2)
-        p->data->t_die = nb * 1000;
+        p->data->t_die = nb;
     else if (pos == 3)
-        p->data->t_eat = nb * 1000;
+        p->data->t_eat = nb;
     else if (pos == 4)
-        p->data->t_sleep = nb * 1000;
+        p->data->t_sleep = nb;
     else if (pos == 5)
         p->data->n_eat_max = nb;
     return (nb);

@@ -20,10 +20,10 @@
 typedef struct s_data
 {
     int n_philo;
-    int t_die;
-    int t_sleep;
-    int t_eat;
-    int n_eat_max;
+    long long t_die;
+    long long t_sleep;
+    long long t_eat;
+    long long n_eat_max;
     long long time_at_start;   
     pthread_mutex_t print_mutex;
     pthread_mutex_t *forks;
@@ -53,7 +53,8 @@ void *monitoring(void *arg);
 /* utils */
 int ft_strlen(char *str);
 long long time_ms(void);
-void print_lock(t_philo *p, char *str, char *emoji);
+int print_lock(t_philo *p, char *str, char *emoji, int state);
 void free_and_exit(t_philo *p);
+void    ft_usleep(size_t mls);
 
 #endif

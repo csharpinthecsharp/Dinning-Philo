@@ -23,31 +23,36 @@ void *routine(void *arg)
 
     while (p->data->death != 0)
     {
-        print_lock(p, BLUE "is thinking" RESET, "💭");
+        print_lock(p, BLUE "is thinking" RESET, "💭", 0);
         if (left < right)
         {
             pthread_mutex_lock(&p->data->forks[left]);
-            print_lock(p, MAGENTA "has taken a fork" RESET, "🥄");
+            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
+                return (NULL);
             pthread_mutex_lock(&p->data->forks[right]);
-            print_lock(p, MAGENTA "has taken a fork" RESET, "🥄");
+            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
+                return (NULL);
         }
         else
         {
             pthread_mutex_lock(&p->data->forks[right]);
-            print_lock(p, MAGENTA "has taken a fork" RESET, "🥄");
+            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
+                return (NULL);
             pthread_mutex_lock(&p->data->forks[left]);
-            print_lock(p, MAGENTA "has taken a fork" RESET, "🥄");
+            if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
+                return (NULL);
         }
-
         p->lastmeal = time_ms();
-        print_lock(p, YELLOW "is eating" RESET, "🍔");
-        usleep(p->data->t_eat);
+        if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
+                return (NULL);
+        ft_usleep(p->data->t_eat);
 
         pthread_mutex_unlock(&p->data->forks[right]);
         pthread_mutex_unlock(&p->data->forks[left]);
 
-        print_lock(p, GREEN "is sleeping" RESET, "💤");
-        usleep(p->data->t_sleep);
+        if (print_lock(p, GREEN "is sleeping" RESET, "💤", 0) == 1)
+                return (NULL);
+        ft_usleep(p->data->t_sleep);
     }
     return NULL;
 }
@@ -66,9 +71,9 @@ void *monitoring(void *arg)
             if (t_current - p[i].lastmeal >= p[i].data->t_die)
             {
                 p->data->death = 0;
-                print_lock(&p[i], "\e[31mdied", "⚰️");
+                print_lock(&p[i], "\e[31mdied" RESET, "⚰️ ", 1);
             } 
-            usleep(1000);
+            ft_usleep(1);
             i++;
         }
     }
