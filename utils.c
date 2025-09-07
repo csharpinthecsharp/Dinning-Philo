@@ -31,8 +31,13 @@ long long time_ms(void) {
 
 int print_lock(t_philo *p, char *str, char *emoji, int state)
 {
+    pthread_mutex_lock(&p->data->death_mutex);
     if (p->data->death == 0 && state == 0)
+    {
+        pthread_mutex_unlock(&p->data->death_mutex);
         return (1);
+    }
+    pthread_mutex_unlock(&p->data->death_mutex);
     pthread_mutex_lock(&p->data->print_mutex);
     long long t_current = time_ms();
     long long t_elapsed = (t_current - p->data->time_at_start);

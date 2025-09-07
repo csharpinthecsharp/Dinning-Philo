@@ -14,7 +14,7 @@
 
 static int init_philo(t_philo **p, int n)
 {
-    *p = malloc(sizeof(t_philo) * 10); // A FIX LE VRAI NOMBRE
+    *p = malloc(sizeof(t_philo) * n);
     if (!*p)
         return (1);
 
@@ -45,6 +45,7 @@ static int init_philo(t_philo **p, int n)
 static void init_mutex(t_philo *p)
 {
     pthread_mutex_init(&p->data->print_mutex, NULL);
+    pthread_mutex_init(&p->data->death_mutex, NULL);
     int i = 0;
     p->data->forks = malloc(sizeof(pthread_mutex_t) * p->data->n_philo);
     while (i < p->data->n_philo)
@@ -63,7 +64,7 @@ static int init_threads(t_philo *p)
     p->thread = malloc(sizeof(pthread_t) * p->data->n_philo);
     if (!p->thread)
         return (1);
-    if (pthread_create(&p->data->eye, NULL, &monitoring, p) != 0)
+    if (pthread_create(&p->data->eye, NULL, &monitoring, (void *)p) != 0)
         return (1);  
     while (i < p->data->n_philo)
     {
@@ -72,24 +73,20 @@ static int init_threads(t_philo *p)
         i++;
     }
     i = 0;
-    if (pthread_join(p->data->eye, NULL))
-        return (1);
     while (i < p->data->n_philo)
     {
-        if (pthread_join(p->thread[i], NULL))
-            return (1);
+        pthread_join(p->thread[i], NULL);
         i++;
     }
-
+    pthread_join(p->data->eye, NULL);
     return (0);
 }
 
 int init_struct(t_philo **p, char *joker[], int ac)
 {
-    (void)joker;
     int n;
     
-    n = ac;
+    n = atoi(joker[1]);
     if (init_philo(p, n) == 1)
         return (1);
     if (start_check(*p, joker, ac) == 1)

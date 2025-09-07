@@ -27,6 +27,7 @@ typedef struct s_data
     long long time_at_start;   
     pthread_mutex_t print_mutex;
     pthread_mutex_t *forks;
+    pthread_mutex_t death_mutex;
     pthread_t eye;
     int death;
 }   t_data;
