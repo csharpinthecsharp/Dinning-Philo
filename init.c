@@ -50,9 +50,23 @@ static void init_mutex(t_philo *p)
     p->data->forks = malloc(sizeof(pthread_mutex_t) * p->data->n_philo);
     while (i < p->data->n_philo)
     {
+        pthread_mutex_init(&p[i].meal_mutex, NULL);
         pthread_mutex_init(&p->data->forks[i], NULL);
         i++;
     }
+}
+
+static int pre_thread(t_philo *p)
+{
+    if (p->data->n_philo == 1)
+    {
+        printf("💭 [0]-> 1: " BLUE "is thinking \n" RESET);
+        printf("🥄 [0]-> 1: " MAGENTA "has taken a fork \n" RESET);
+        ft_usleep(p->data->t_die);
+        printf("⚰️  [%lld]-> 1: " RED "died \n" RESET, p->data->t_die);
+        return (1);
+    }
+    return (0);
 }
 
 static int init_threads(t_philo *p)
@@ -70,6 +84,7 @@ static int init_threads(t_philo *p)
     {
         if (pthread_create(&p->thread[i], NULL, &routine, &p[i]) != 0)
             return (1);
+        ft_usleep(1);
         i++;
     }
     i = 0;
@@ -90,6 +105,8 @@ int init_struct(t_philo **p, char *joker[], int ac)
     if (init_philo(p, n) == 1)
         return (1);
     if (start_check(*p, joker, ac) == 1)
+        return (1);
+    if (pre_thread(*p) == 1)
         return (1);
     if (init_threads(*p) == 1)
         return (1);

@@ -12,8 +12,6 @@
 
 #include "header.h"
 
-
-
 void *routine(void *arg)
 {
     t_philo *p = (t_philo *)arg;   
@@ -34,6 +32,7 @@ void *routine(void *arg)
                 return (NULL);
             }
             pthread_mutex_lock(&p->data->forks[right]);
+
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
             {
                 pthread_mutex_unlock(&p->data->forks[right]);
@@ -46,8 +45,8 @@ void *routine(void *arg)
             pthread_mutex_lock(&p->data->forks[right]);
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
             {
-                return (NULL);
                 pthread_mutex_unlock(&p->data->forks[right]);
+                return (NULL);
             }
             pthread_mutex_lock(&p->data->forks[left]);
             if (print_lock(p, MAGENTA "has taken a fork" RESET, "🥄", 0) == 1)
@@ -57,9 +56,11 @@ void *routine(void *arg)
                 return (NULL);
             }
         }
-        p->lastmeal = time_ms();
         if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
             return (NULL);
+        pthread_mutex_lock(&p->meal_mutex);
+        p->lastmeal = time_ms();
+        pthread_mutex_unlock(&p->meal_mutex);
         ft_usleep(p->data->t_eat);
 
         pthread_mutex_unlock(&p->data->forks[right]);
@@ -82,10 +83,15 @@ void *monitoring(void *arg)
         i = 0;
         while (i < p->data->n_philo)
         {
+            pthread_mutex_lock(&p[i].meal_mutex);
+            long long meal = p[i].lastmeal;
+            pthread_mutex_unlock(&p[i].meal_mutex);
             long long t_current = time_ms();
-            if (t_current - p[i].lastmeal >= p[i].data->t_die)
+            if (t_current - meal >= p[i].data->t_die)
             {
+                pthread_mutex_lock(&p->data->death_mutex);
                 p->data->death = 0;
+                pthread_mutex_unlock(&p->data->death_mutex);
                 print_lock(&p[i], "\e[31mdied" RESET, "⚰️ ", 1);
                 return (NULL);
             } 

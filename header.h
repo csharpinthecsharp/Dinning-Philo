@@ -40,6 +40,7 @@ typedef struct s_philo
     int id;
     struct s_data      *data;
     long long lastmeal;
+    pthread_mutex_t meal_mutex;
 
 }   t_philo;
 
