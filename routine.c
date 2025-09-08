@@ -90,9 +90,8 @@ static long long	get_lastmeal(t_philo *p)
 
 void	*monitoring(void *arg)
 {
-	t_philo		*p;
-	int			i;
-	long long	meal;
+	t_philo	*p;
+	int		i;
 
 	p = (t_philo *)arg;
 	while (1)
@@ -100,24 +99,17 @@ void	*monitoring(void *arg)
 		i = 0;
 		while (i < p->data->n_philo)
 		{
-			meal = get_lastmeal(p);
-			if (time_ms() - meal >= p[i].data->t_die)
+			if (time_ms() - get_lastmeal() >= p[i].data->t_die)
 			{
-				pthread_mutex_lock(&p->data->death_mutex);
-				p->data->death = 0;
-				pthread_mutex_unlock(&p->data->death_mutex);
-				print_lock(p, "\e[31mdied" RESET, "⚰️ ", 1);
+				handle_death(p, 0);
 				return (NULL);
 			}
-            if ((((p[i].eat_count == p->data->n_eat_max) * p->data->n_philo)
-                 && p->data->n_eat_max > 0)) 
-            {
-                ft_usleep(1);
-                pthread_mutex_lock(&p->data->death_mutex);
-				p->data->death = 0;
-				pthread_mutex_unlock(&p->data->death_mutex);
-                return (NULL);
-            }
+			if ((((p[i].eat_count == p->data->n_eat_max) * p->data->n_philo)
+					&& p->data->n_eat_max > 0))
+			{
+				handle_death(p, 1);
+				return (NULL);
+			}
 			ft_usleep(1);
 			i++;
 		}

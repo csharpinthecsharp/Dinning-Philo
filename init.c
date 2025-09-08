@@ -102,7 +102,7 @@ int	init_program(t_philo **p, char *joker[], int ac)
 {
 	int	n;
 
-	n = atoi(joker[1]);
+	n = check_max_min(&joker[1], 0);
 	if (init_philo(p, n) == 1)
 		return (1);
 	if (start_check(*p, joker, ac) == 1)

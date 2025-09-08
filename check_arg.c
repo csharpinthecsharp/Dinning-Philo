@@ -34,7 +34,7 @@ static int	check_nb(char *joker[])
 	return (0);
 }
 
-static int	check_max_min(char *joker[], int pos)
+int	check_max_min(char *joker[], int pos)
 {
 	int		nbr;
 	int		sign;

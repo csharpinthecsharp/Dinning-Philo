@@ -70,5 +70,7 @@ long long			time_ms(void);
 int					print_lock(t_philo *p, char *str, char *emoji, int state);
 void				free_and_exit(t_philo *p);
 void				ft_usleep(size_t mls);
+int					check_max_min(char *joker[], int pos);
+void				handle_death(t_philo *p, int state);
 
 #endif
