@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 18:28:55 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:29:49 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*monitoring(void *arg)
 		{
 			if (time_ms() - get_lastmeal(p) >= p[i].data->t_die)
 			{
-				handle_death(&p[i], 0);
+				handle_death(&p[i]);
 				return (NULL);
 			}
 			if (finish_eating(&p[i]) == 1)

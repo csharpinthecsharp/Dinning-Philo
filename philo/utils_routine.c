@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 19:23:36 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:29:27 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,12 @@ int	take_forks(t_philo *p, int left, int right, int start)
 	return (0);
 }
 
-void	handle_death(t_philo *p, int state)
+void	handle_death(t_philo *p)
 {
-	if (state == 0)
-	{
-		pthread_mutex_lock(&p->data->death_mutex);
-		p->data->death = 0;
-		pthread_mutex_unlock(&p->data->death_mutex);
-		print_lock(p, "\e[31mdied" RESET, "⚰️ ", 1);
-	}
+	pthread_mutex_lock(&p->data->death_mutex);
+	p->data->death = 0;
+	pthread_mutex_unlock(&p->data->death_mutex);
+	print_lock(p, "\e[31mdied" RESET, "⚰️ ", 1);
 }
 
 

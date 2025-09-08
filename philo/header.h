@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 18:21:55 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 18:20:09 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:29:37 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int					print_lock(t_philo *p, char *str, char *emoji, int state);
 void				free_and_exit(t_philo *p);
 void				ft_usleep(size_t mls);
 int					check_max_min(char *joker[], int pos);
-void				handle_death(t_philo *p, int state);
+void				handle_death(t_philo *p);
 int					take_forks(t_philo *p, int left, int right, int start);
 int					eat(t_philo *p);
 int 				finish_eating(t_philo *p);
