@@ -50,7 +50,7 @@
 	}
 
 
-	int	eat_sleep(t_philo *p)
+	int	eat(t_philo *p)
 	{
 		pthread_mutex_lock(&p->meal_mutex);
 		p->lastmeal = time_ms();
@@ -68,7 +68,8 @@
 	{
 		pthread_mutex_lock(&p->meal_mutex);
 		if ((p->eat_count >= (p->data->n_eat_max)
-		&& p->data->n_eat_max > 0))
+		&& p->data->n_eat_max > 0)
+		&& p->data->n_eat_max != MAX_INT)
 		{
 			pthread_mutex_unlock(&p->meal_mutex);
 			return (1);

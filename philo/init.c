@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 18:10:53 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:25:53 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int	init_philo(t_philo **p, int n)
 	data->time_at_start = time_ms();
 	data->death = 1;
 	data->eye = 0;
+	data->n_eat_max = MAX_INT;
 	i = 0;
 	while (i < n)
 	{

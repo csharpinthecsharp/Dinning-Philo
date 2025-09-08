@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 18:05:05 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:22:41 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,10 @@ void	*routine(void *arg)
 		}
 		if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
 			break ;
-		if (eat_sleep(p) == 1)
+		if (eat(p) == 1)
 			break;
-		if (print_lock(p, GREEN "is sleeping" RESET, "💤", 0) == 1)
+		if (print_lock(p, GREEN "is sleeping" RESET, "💤", 2) == 1)
 			break ;
-		ft_usleep(p->data->t_sleep);
 	}
 	return (NULL);
 }

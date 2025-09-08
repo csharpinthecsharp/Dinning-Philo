@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 22:27:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 18:10:14 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:24:02 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_lock(t_philo *p, char *str, char *emoji, int state)
 	long long	t_elapsed;
 
 	pthread_mutex_lock(&p->data->death_mutex);
-	if (p->data->death == 0 && state == 0)
+	if (p->data->death == 0 && (state == 0 || state == 2))
 	{
 		pthread_mutex_unlock(&p->data->death_mutex);
 		return (1);
@@ -30,6 +30,8 @@ int	print_lock(t_philo *p, char *str, char *emoji, int state)
 	printf(" %s [%lld]-> %d: %s \n", emoji, t_elapsed, p->id, str);
 	pthread_mutex_unlock(&p->data->print_mutex);
 	usleep(100);
+	if (state == 2)
+		ft_usleep(p->data->t_sleep);
 	return (0);
 }
 

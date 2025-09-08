@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 18:21:55 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 17:42:09 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:20:09 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void				ft_usleep(size_t mls);
 int					check_max_min(char *joker[], int pos);
 void				handle_death(t_philo *p, int state);
 int					take_forks(t_philo *p, int left, int right, int start);
-int					eat_sleep(t_philo *p);
+int					eat(t_philo *p);
 int 				finish_eating(t_philo *p);
 long long			get_lastmeal(t_philo *p);
 
