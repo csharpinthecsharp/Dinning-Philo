@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 18:48:38 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:10:53 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ static int	pre_thread(t_philo *p)
 		printf("🥄 [0]-> 1: " MAGENTA "has taken a fork \n" RESET);
 		ft_usleep(p->data->t_die);
 		printf("⚰️  [%lld]-> 1: " RED "died \n" RESET, p->data->t_die);
+		return (1);
+	}
+	if (p->data->n_eat_max == 0)
+	{
+		printf("💭 [0]-> 1: " BLUE "is thinking \n" RESET);
+		printf("🥄 [0]-> 1: " MAGENTA "has taken a fork \n" RESET);
+		ft_usleep(p->data->t_die);
 		return (1);
 	}
 	return (0);
