@@ -99,7 +99,7 @@ void	*monitoring(void *arg)
 		i = 0;
 		while (i < p->data->n_philo)
 		{
-			if (time_ms() - get_lastmeal() >= p[i].data->t_die)
+			if (time_ms() - get_lastmeal(p) >= p[i].data->t_die)
 			{
 				handle_death(p, 0);
 				return (NULL);

@@ -27,7 +27,6 @@ void	handle_death(t_philo *p, int state)
 		pthread_mutex_lock(&p->data->death_mutex);
 		p->data->death = 0;
 		pthread_mutex_unlock(&p->data->death_mutex);
-		return (NULL);
 	}
 }
 
