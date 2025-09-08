@@ -6,20 +6,31 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 22:27:53 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/07 18:48:55 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/08 17:10:37 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "header.h"
 
-int	ft_strlen(char *str)
+int	print_lock(t_philo *p, char *str, char *emoji, int state)
 {
-	int	i;
+	long long	t_current;
+	long long	t_elapsed;
 
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
+	pthread_mutex_lock(&p->data->death_mutex);
+	if (p->data->death == 0 && state == 0)
+	{
+		pthread_mutex_unlock(&p->data->death_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&p->data->death_mutex);
+	pthread_mutex_lock(&p->data->print_mutex);
+	t_current = time_ms();
+	t_elapsed = (t_current - p->data->time_at_start);
+	printf(" %s [%lld]-> %d: %s \n", emoji, t_elapsed, p->id, str);
+	pthread_mutex_unlock(&p->data->print_mutex);
+	usleep(100);
+	return (0);
 }
 
 long long	time_ms(void)
@@ -46,4 +57,13 @@ void	free_and_exit(t_philo *p)
 	free(p->thread);
 	free(p->data);
 	free(p);
+}
+
+void	ft_usleep(size_t mls)
+{
+	size_t	start;
+
+	start = time_ms();
+	while (time_ms() - start < mls)
+		usleep(500);
 }

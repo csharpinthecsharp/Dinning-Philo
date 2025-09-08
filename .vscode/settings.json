@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "header.h": "c",
-        "time.h": "c",
-        "initializer_list": "c",
-        "string.h": "c",
-        "cstdlib": "c"
-    }
-}
