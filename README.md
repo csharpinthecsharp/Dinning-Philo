@@ -45,10 +45,3 @@ Run a simulation with 5 philosophers:
 ## 🖼️ Visual
 
 <img width="317" height="605" alt="image" src="https://github.com/user-attachments/assets/0ba57d86-2010-4f2d-bfcf-0a78652f4aa6" />
-
----
-
-## 🧩 Notes
-- Each philosopher is represented by a thread.
-- Forks are protected with mutexes to avoid simultaneous access.
-- A global mutex is used for clean console output.
