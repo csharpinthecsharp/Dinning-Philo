@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:11:20 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 18:25:53 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/10 00:58:09 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,21 @@ int	init_program(t_philo **p, char *joker[], int ac)
 
 	n = check_max_min(&joker[1], 0);
 	if (init_philo(p, n) == 1)
+	{
+		printf("%sError:\nPhilosophers initialisation failed.", RED);
 		return (1);
+	}
 	if (start_check(*p, joker, ac) == 1)
+	{
+		printf("%sError:\nSomething went wrong while checking args.", RED);
 		return (1);
+	}
 	if (pre_thread(*p) == 1)
 		return (1);
 	if (init_threads(*p) == 1)
+	{
+		printf("%sError:\nThreads creation failed.", RED);
 		return (1);
+	}
 	return (0);
 }
