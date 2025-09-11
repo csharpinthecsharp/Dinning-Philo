@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:20:00 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/10 01:00:38 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:14:52 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	main(int ac, char *av[])
 
 	if (!(ac >= 5 && ac <= 6))
 	{
-		printf("%sError:\nUsage ./philo [ARG1], [ARG2], [ARG3], [ARG4], [*ARG5].", RED);
+		printf("%sError:\nUsage ./philo [ARG1], [ARG2], [ARG3], [ARG4],"
+			"[*ARG5].", RED);
 		return (1);
 	}
 	p = &philo;

@@ -34,7 +34,7 @@ void	*routine(void *arg)
 		if (print_lock(p, YELLOW "is eating" RESET, "🍔", 0) == 1)
 			break ;
 		if (eat(p) == 1)
-			break;
+			break ;
 		if (print_lock(p, GREEN "is sleeping" RESET, "💤", 2) == 1)
 			break ;
 	}

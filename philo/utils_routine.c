@@ -6,7 +6,7 @@
 /*   By: ltrillar <ltrillar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 00:06:41 by ltrillar          #+#    #+#             */
-/*   Updated: 2025/09/08 19:29:27 by ltrillar         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:16:37 by ltrillar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	handle_death(t_philo *p)
 	print_lock(p, "\e[31mdied" RESET, "⚰️ ", 1);
 }
 
-
 int	eat(t_philo *p)
 {
 	pthread_mutex_lock(&p->meal_mutex);
@@ -61,19 +60,18 @@ int	eat(t_philo *p)
 	return (0);
 }
 
-int finish_eating(t_philo *p)
+int	finish_eating(t_philo *p)
 {
 	pthread_mutex_lock(&p->meal_mutex);
-	if ((p->eat_count >= (p->data->n_eat_max)
-	&& p->data->n_eat_max > 0)
-	&& p->data->n_eat_max != MAX_INT)
+	if ((p->eat_count >= (p->data->n_eat_max) && p->data->n_eat_max > 0)
+		&& p->data->n_eat_max != MAX_INT)
 	{
 		pthread_mutex_unlock(&p->meal_mutex);
 		return (1);
 	}
 	pthread_mutex_unlock(&p->meal_mutex);
 	return (0);
-} 
+}
 
 long long	get_lastmeal(t_philo *p)
 {
